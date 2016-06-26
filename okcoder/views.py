@@ -38,10 +38,10 @@ def create(request):
         p2 = Partner.objects.create_partner(user2, c2, b)
         p1.save()
         p2.save()
-        return HttpResponseRedirect(reverse('okcoder:results', args=(b,)))
+        return HttpResponseRedirect(reverse('okcoder:results', args=(b,p1,p2)))
 
-def results(request, b):
-    args = {}
+def results(request, b, p1, p2):
+    args = {'p1': p1, 'p2': p2}
     # briefing status
     b = int(b)
     if b == 0:
@@ -51,16 +51,7 @@ def results(request, b):
     elif b == 2:
         args['full'] = b
     return render(request, 'okcoder/results.html', args)
-    """
-    s = ''
-    b = int(b)
-    if b == 0:
-        s = ', no briefing.'
-    elif b == 1:
-        s = ', minimal briefing.'
-    elif b == 2:
-        s = ', full briefing.'
-    else:
-        s = ', I don\'t recognize option '+str(b)+' with type '+str(type(b))
-    return HttpResponse("Hello world"+s)
-    """
+
+def play(request, p1, p2):
+    args = {'p1':p1,'p2':p2}
+    return render(request, 'okcoder/play.html', args)
