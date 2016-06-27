@@ -1,9 +1,21 @@
 {% if no_brief %}
-  <p><strong>All right, let's go!</strong></p>
+  <h3>All right, let's go!</h3>
 {% elif min %}
-  <p><strong>Minimal briefing!</strong></p>
+  <!-- Minimal briefing -->
+  <h3>Before you begin:</h3>
+  <p>Remember that you're working <b>with a partner</b> on the same computer.</p>
+  <p>Make sure both of you get a chance to use the keyboard - try switching off between levels.</p>
 {% elif full %}
-  <p><strong>Full briefing!</strong></p>
+  <!-- Full briefing -->
+  <h3>Before you begin:</h3>
+  <p>Since you'll be working with a partner on this, let's talk about some strategies to help you get the most out of your partnership.</p>
+  <p>Professional programmers frequently work in pairs on the same computer, with the following roles:</p>
+  <ul>
+    <li><b>Driver:</b> the person actually using the mouse and/or keyboard, analogous to the driver in a car.</li>
+    <li><b>Navigator:</b> the person giving the driver directions and suggestions, since the driver shouldn't be looking at a map/their phone/etc.</li>
+  </ul>
+  <p>This might feel a little strange at first, but a good way to think about this is that the person who has an idea of how to solve the problem at hand should <i>never</i> be driving. If you have an idea and you are driving, have your navigator take over at the keyboard and explain the idea to them.</p>
+  <p>Talk a lot! Communication is key when you're working with a partner.</p>
 {% endif %}
 
-<a href="{% url 'okcoder:play' p1 p2 %}">Begin</a>
+<a href="{% url 'okcoder:play' ps %}" id="start">Begin</a>

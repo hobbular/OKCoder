@@ -1,0 +1,65 @@
+<!--
+NOTE: this form explicitly requires a separate designation of P1 and P2,
+beyond just the partnership. This is because both partners will evaluate
+individually, so at some point the partnership's p1 will actually be p2 here,
+and vice versa.
+-->
+<p>Note: these evaluations should be completed <b>independently</b> &mdash; have your partner step away from the computer while you fill this out.</p>
+
+<form id="eval" action="{% url 'okcoder:evaluate' ps %}" method="post">
+{% csrf_token %}
+<fieldset>
+  <legend>Evaluation</legend>
+
+  <p>
+    <label>Your ID:</label>
+    <input type="text" name="name" value="{{ p1.name }}" readonly>
+  </p>
+  <p>
+    <label>Your Parnter:</label>
+    <input type="text" name="partner" value="{{ p2.name }}" readonly>
+  </p>
+  <p>
+    <label>Highest level:</label>
+    <input type="number" min="0" max="15" name="level">
+  </p>
+
+  <p>&nbsp;</p>
+
+  <p>
+    <label>My experience was:</label>
+    <span class="minlabel">positive</span>
+    <input type="range" name="overall" min="0" max="10">
+    <span class="maxlabel">negative</span>
+  </p>
+
+  <p>
+    <label>I learned:</label>
+    <span class="minlabel">a lot</span>
+    <input type="range" name="learned" min="0" max="10">
+    <span class="maxlabel">nothing</span>
+  </p>
+
+  <p>
+    <label>I did:</label>
+    <span class="minlabel">all of the work</span>
+    <input type="range" name="workload" min="0" max="10">
+    <span class="maxlabel">none of the work</span>
+  </p>
+
+  <p>
+    <label>I would work with<br> this person again:</label>
+    <span class="minlabel">definitely</span>
+    <input type="range" name="again" min="0" max="10">
+    <span class="maxlabel">never</span>
+  </p>
+
+  <p>
+    <label>Additional comments:</label>
+    <textarea name="comments" form="eval" rows="10" cols="30" placeholder="Let us know how it went!">
+    </textarea>
+  </p>
+
+  <input type="submit">
+</fieldset>
+</form>

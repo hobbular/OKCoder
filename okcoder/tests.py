@@ -1,8 +1,9 @@
 from django.test import TestCase
 
 # Create your tests here.
-
+from .models import Partner, Evaluation
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
 class BriefingViewTests(TestCase):
     def test_no_briefing(self):
@@ -28,3 +29,11 @@ class BriefingViewTests(TestCase):
         """
         response = self.client.get(reverse('okcoder:results', args=(2,)))
         self.assertContains(response, "Full briefing")
+
+class EvaluationTests(TestCase):
+    def test_full_evaluation(self):
+        p1 = Partner(name='p1',reg_date=timezone.now(),consent=True)
+        p2 = Partner(name='p2',reg_date=timezone.now(),consent=True)
+        e = Evaluation.objects.create_evaluation({
+                'name':p1.name,'partner':p2.name,'level':'12',
+                    })

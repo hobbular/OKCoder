@@ -15,11 +15,19 @@
 </xml>
 <!-- end blockly stuff -->
 
-<p>Welcome, {{ p1 }} and {{ p2 }}!</p>
+<p>Welcome, {{ ps.p1.name }} and {{ ps.p2.name }}!</p>
 
 <div id="blocklyDiv" style="height:480px; width:600px;"></div>
 
 <script>
   var workspace = Blockly.inject('blocklyDiv',
-  {toolbox: document.getElementById('toolbox')});
+  {toolbox: document.getElementById('toolbox'),
+   grid:
+       {spacing: 20,
+        length: 1,
+        colour: '#ccc',
+        snap: true},
+   trashcan: true});
 </script>
+
+<a href="{% url 'okcoder:eval' ps %}" id="done">Complete!</a>
