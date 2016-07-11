@@ -29,7 +29,7 @@ def create(request):
     except KeyError:
         return render(
             request, 'okcoder/init.html', 
-            {'error_message': "Please answer all questions!",
+            {'error_message': "Both partners must select a consent option!",
              'id1': user1, 'id2': user2}
             )
     else:

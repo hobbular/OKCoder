@@ -1,9 +1,14 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'okcoder/main.css' %}">
+
 <!--
 NOTE: this form explicitly requires a separate designation of P1 and P2,
 beyond just the partnership. This is because both partners will evaluate
 individually, so at some point the partnership's p1 will actually be p2 here,
 and vice versa.
 -->
+<div id="content">
 <p>Note: these evaluations should be completed <b>independently</b> &mdash; have your partner step away from the computer while you fill this out.</p>
 
 <form id="eval" action="{% url 'okcoder:evaluate' ps %}" method="post">
@@ -11,11 +16,13 @@ and vice versa.
 <fieldset>
   <legend>Evaluation</legend>
 
+  <p style="font-weight:bold; text-align:center; color:#cc3333;">{{ p1.name }}: Please fill out this evaluation on your own.</p>
+
   <p>
     <label>Your ID:</label>
     <input type="text" name="name" value="{{ p1.name }}" readonly>
   </p>
-  <p>
+  <p style="display:none;">
     <label>Your Parnter:</label>
     <input type="text" name="partner" value="{{ p2.name }}" readonly>
   </p>
@@ -63,3 +70,4 @@ and vice versa.
   <input type="submit">
 </fieldset>
 </form>
+</div><!-- content -->

@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'okcoder/main.css' %}">
+
 <!-- blockly stuff -->
 <script src="{% static 'blockly/blockly_compressed.js' %}"></script>
 <script src="{% static 'blockly/blocks_compressed.js' %}"></script>
@@ -15,8 +17,12 @@
 </xml>
 <!-- end blockly stuff -->
 
+<div id="header">
 <p>Welcome, {{ ps.p1.name }} and {{ ps.p2.name }}!</p>
+<br>
+</div><!-- header -->
 
+<div id="content">
 <div id="blocklyDiv" style="height:480px; width:600px;"></div>
 
 <script>
@@ -30,4 +36,6 @@
    trashcan: true});
 </script>
 
+<br>
 <a href="{% url 'okcoder:eval' ps %}" id="done">Complete!</a>
+</div><!-- content -->
