@@ -6,45 +6,18 @@
 <link rel="stylesheet" type="text/css" href="{% static 'blockly-games/appengine/common/common.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'blockly-games/appengine/maze/style.css' %}">
 
-<!-- blockly stuff >
-<script src="{% static 'blockly/blockly_compressed.js' %}"></script>
-<script src="{% static 'blockly/blocks_compressed.js' %}"></script>
-<script src="{% static 'blockly/msg/js/en.js' %}"></script>
-<xml id="toolbox" style="display: none">
-  <block type="controls_if"></block>
-  <block type="controls_repeat_ext"></block>
-  <block type="logic_compare"></block>
-  <block type="math_number"></block>
-  <block type="math_arithmetic"></block>
-  <block type="text"></block>
-  <block type="text_print"></block>
-</xml>
-<!-- end blockly stuff -->
-
-<!-- blockly-games stuff -->
-<script src="{% static 'blockly-games/appengine/maze/uncompressed.js' %}"></script>
-<!-- end blockly-games stuff -->
-
 <div id="header">
-<p>Welcome, {{ ps.p1.name }} and {{ ps.p2.name }}!</p>
+<!--p>Welcome, {{ ps.p1.name }} and {{ ps.p2.name }}!</p-->
 <br>
 </div><!-- header -->
 
 <div id="content">
 <div id="blocklyDiv" style="height:480px; width:600px;"></div>
 
-<!--script src="{% static 'blockly-games/test.js' %}"></script-->
-<!--script>
-  var workspace = Blockly.inject('blocklyDiv',
-  {toolbox: document.getElementById('toolbox'),
-   grid:
-       {spacing: 20,
-        length: 1,
-        colour: '#ccc',
-        snap: true},
-   trashcan: true});
-</script-->
+<!-- blockly-games stuff -->
+<script src="{% static 'blockly-games/appengine/maze/uncompressed.js' %}"></script>
+<!-- end blockly-games stuff -->
 
 <br>
-<a href="{% url 'okcoder:eval' ps %}" id="done">Complete!</a>
+<!--a href="{% url 'okcoder:eval' ps %}" id="done">Complete!</a-->
 </div><!-- content -->

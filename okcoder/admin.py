@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Partner, Partnership, Evaluation
+from .models import Partner, Partnership, Evaluation, LevelLog
 
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ('name', 'reg_date', 'consent', 'eval_complete')
@@ -15,3 +15,4 @@ class EvaluationAdmin(admin.ModelAdmin):
 admin.site.register(Partner, PartnerAdmin)
 admin.site.register(Partnership, PartnershipAdmin)
 admin.site.register(Evaluation, EvaluationAdmin)
+admin.site.register(LevelLog)

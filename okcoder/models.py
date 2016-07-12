@@ -54,6 +54,28 @@ class Partnership(models.Model):
     def __str__(self):
         return self.name
 
+class LevelLogManager(models.Manager):
+    def create_levellog(self, p, num):
+        log = self.create(
+            partnership = get_object_or_404(Partnership, name=p),
+            level = int(num),
+            timestamp = timezone.now()
+            )
+        return log
+
+class LevelLog(models.Model):
+    """
+    For logging when various levels are completed by a partnership 
+    """
+    partnership = models.ForeignKey(Partnership, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField('timestamp')
+    level = models.IntegerField(default=0)
+
+    objects = LevelLogManager()
+
+    def __str__(self):
+        return self.partnership.name+" ("+str(self.level)+"), "+str(self.timestamp)
+
 class EvaluationManager(models.Manager):
     def create_evaluation(self, form):
         """
@@ -90,3 +112,4 @@ class Evaluation(models.Model):
 
     def __str__(self):
         return self.evaluator.name
+
