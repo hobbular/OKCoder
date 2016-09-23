@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
-from .models import Partner, Partnership, Evaluation, LevelLog
+from .models import Partner, Partnership, Evaluation, LevelLog, RunLog
 import random, string
 
 # Create your views here.
@@ -28,7 +28,7 @@ def create(request):
         c2 = request.POST['consent2'] == "True"
     except KeyError:
         return render(
-            request, 'okcoder/init.html', 
+            request, 'okcoder/init.html',
             {'error_message': "Both partners must select a consent option!",
              'id1': user1, 'id2': user2}
             )
@@ -61,6 +61,22 @@ def play(request, ps):
     log = LevelLog.objects.create_levellog(ps.name, level)
     log.save()
     return render(request, 'okcoder/play.html', {'ps':ps})
+
+def log(request):
+    """ This is for logging actions within the blockly-game interface.
+        It is called by jQuery code in maze.js every time the user pushes
+        the Run button, so we can see how they're doing.
+    """
+    try:
+        code = request.POST['usercode']
+        status = request.POST['status']
+        ps = get_object_or_404(Partnership, name=request.POST['ps'])
+        runlog = RunLog.objects.create_runlog(ps.name, status, code)
+        runlog.save()
+    except KeyError:
+        return HttpResponse('y')
+    else:
+        return HttpResponse('x')
 
 def eval(request, ps):
     ps = get_object_or_404(Partnership, name=ps)
@@ -99,7 +115,7 @@ def evaluate(request, ps):
         else:
             p1 = ps.p2
             p2 = ps.p1
-        return render(request, 'okcoder/eval.html', 
+        return render(request, 'okcoder/eval.html',
                       {
                 'ps':ps, 'p1':p1, 'p2':p2,
                 'lev':logs[len(logs)-1].level,
