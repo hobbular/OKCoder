@@ -65,7 +65,7 @@ class LevelLogManager(models.Manager):
 
 class LevelLog(models.Model):
     """
-    For logging when various levels are completed by a partnership 
+    For logging when various levels are completed by a partnership
     """
     partnership = models.ForeignKey(Partnership, on_delete=models.CASCADE)
     timestamp = models.DateTimeField('timestamp')
@@ -75,6 +75,30 @@ class LevelLog(models.Model):
 
     def __str__(self):
         return self.partnership.name+" ("+str(self.level)+"), "+str(self.timestamp)
+
+class RunLogManager(models.Manager):
+    def create_runlog(self, p, status, code):
+        log = self.create(
+            partnership = get_object_or_404(Partnership, name=p),
+            status = int(status),
+            code = code,
+            timestamp = timezone.now()
+            )
+        return log
+
+class RunLog(models.Model):
+    """
+    For logging more than just level completion, because this is a Real Program
+    """
+    partnership = models.ForeignKey(Partnership, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField('timestamp')
+    status = models.IntegerField(default=0)
+    code = models.TextField()
+
+    objects = RunLogManager()
+
+    def __str__(self):
+        return self.partnership.name+" ["+str(self.status)+"] "+str(self.timestamp)
 
 class EvaluationManager(models.Manager):
     def create_evaluation(self, form):
