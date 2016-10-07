@@ -100,6 +100,30 @@ class RunLog(models.Model):
     def __str__(self):
         return self.partnership.name+" ["+str(self.status)+"] "+str(self.timestamp)
 
+class EventLogManager(models.Manager):
+    def create_eventlog(self, p, name, inf):
+        log = self.create(
+            partnership = get_object_or_404(Partnership, name=p),
+            timestamp = timezone.now(),
+            event = name,
+            info = inf
+            )
+        return log
+
+class EventLog(models.Model):
+    """
+    For logging every single goddamn event possible
+    """
+    partnership = models.ForeignKey(Partnership, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField('timestamp')
+    event = models.CharField(max_length=100)
+    info = models.CharField(max_length=100)
+
+    objects = EventLogManager()
+
+    def __str__(self):
+        return self.partnership.name+" ["+event+"] "+str(self.timestamp)
+
 class EvaluationManager(models.Manager):
     def create_evaluation(self, form):
         """
