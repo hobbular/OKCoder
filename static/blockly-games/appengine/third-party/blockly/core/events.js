@@ -402,6 +402,22 @@ Blockly.Events.Create.prototype.run = function(forward) {
       }
     }
   }
+
+  console.log("HAY MAYBE THIS WORKS");
+
+  // HOBBES: logging this event run
+  var path = window.location.pathname;
+  var a = path.indexOf("/", 1);
+  var b = path.indexOf("/", a+1);
+  var ps = path.substring(a+1,b);
+  
+  $.post("/okcoder/eventlog", {
+	  csrfmiddlewaretoken: csrftoken,
+	      ps: ps,
+	      name: "create",
+	      info: this.blockId
+	      }
+      );
 };
 
 /**
