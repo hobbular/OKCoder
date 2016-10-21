@@ -105,6 +105,7 @@ Blockly.Events.fire = function(event) {
  * @private
  */
 Blockly.Events.fireNow_ = function() {
+    console.log("i can haz fiur nao?");
   var queue = Blockly.Events.filter(Blockly.Events.FIRE_QUEUE_, true);
   Blockly.Events.FIRE_QUEUE_.length = 0;
   for (var i = 0, event; event = queue[i]; i++) {
