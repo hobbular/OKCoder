@@ -203,6 +203,8 @@ Blockly.Workspace.prototype.getWidth = function() {
  */
 Blockly.Workspace.prototype.newBlock = function(prototypeName, opt_id) {
     // BLOCK LOGGING HERE???
+	// HOBBES: correct place!
+    console.log("Blockly.Workspace.prototype.newBlock[" + opt_id + "]: " + prototypeName)
   return new Blockly.Block(this, prototypeName, opt_id);
 };
 

@@ -404,6 +404,7 @@ Blockly.Events.Create.prototype.run = function(forward) {
     }
   }
 
+  // this might be getting "optimized" out... it doesn't actually show up ever
   console.log("HAY MAYBE THIS WORKS");
 
   // HOBBES: logging this event run
@@ -413,12 +414,12 @@ Blockly.Events.Create.prototype.run = function(forward) {
   var ps = path.substring(a+1,b);
   
   $.post("/okcoder/eventlog", {
-	  csrfmiddlewaretoken: csrftoken,
-	      ps: ps,
-	      name: "create",
-	      info: this.blockId
-	      }
-	      );*/
+  csrfmiddlewaretoken: csrftoken,
+  ps: ps,
+  name: "create",
+  info: this.blockId
+  }
+  );*/
 };
 
 /**
