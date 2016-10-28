@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
-from .models import Partner, Partnership, Evaluation, LevelLog, RunLog
+from .models import Partner, Partnership, Evaluation, LevelLog, RunLog, EventLog
 import random, string
 
 # Create your views here.
@@ -73,6 +73,22 @@ def log(request):
         ps = get_object_or_404(Partnership, name=request.POST['ps'])
         runlog = RunLog.objects.create_runlog(ps.name, status, code)
         runlog.save()
+    except KeyError:
+        return HttpResponse('y')
+    else:
+        return HttpResponse('x')
+
+def eventlog(request):
+    """ This is for logging EVERYTHING that happens in blockly.
+
+        EVERYTHING.
+    """
+    try:
+        ps = get_object_or_404(Partnership, name=request.POST['ps'])
+        name = request.POST['name']
+        info = request.POST['info']
+        elog = EventLog.objects.create_eventlog(ps.name, name, info)
+        elog.save()
     except KeyError:
         return HttpResponse('y')
     else:

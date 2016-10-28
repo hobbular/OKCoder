@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^init/$', views.init, name='init'),
     url(r'^create/$', views.create, name='create'),
     url(r'^log/$', views.log, name='log'),
+    url(r'^eventlog/$', views.eventlog, name='eventlog'),
     url(r'^(?P<b>[0-2])/(?P<ps>[0-9A-Z]{6})/results/$', views.results, name='results'),
     url(r'^(?P<ps>[0-9A-Z]{6})/play/$', views.play, name='play'),
     url(r'^(?P<ps>[0-9A-Z]{6})/eval/$', views.eval, name='eval'),

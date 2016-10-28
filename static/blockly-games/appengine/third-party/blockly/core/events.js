@@ -101,15 +101,74 @@ Blockly.Events.fire = function(event) {
 };
 
 /**
+ * Adding this in so we can convince Django that we really truly do
+ * deserve to be logging to the database.
+ * @author HOBBES
+ */
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i=0; i<cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0,name.length+1) === (name+'=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length+1))
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');  // THIS IS WHERE THAT VARIABLE CAME FROM
+
+/**
  * Fire all queued events.
  * @private
  */
 Blockly.Events.fireNow_ = function() {
-    console.log("i can haz fiur nao?");
+    // HOBBES: this is actually running??
+    console.log("fireNow()");
   var queue = Blockly.Events.filter(Blockly.Events.FIRE_QUEUE_, true);
   Blockly.Events.FIRE_QUEUE_.length = 0;
   for (var i = 0, event; event = queue[i]; i++) {
     var workspace = Blockly.Workspace.getById(event.workspaceId);
+
+    // information that we're gonna log mk
+    var info = ""
+    console.log(event.__proto__.type);      // the type of event that's happening
+    info += "ws:"+event.workspaceId+";";   // workspace id
+    if (event.oldCoordinate) {              // where the block used to be
+        var oldxy = "o("+event.oldCoordinate.x+","+event.oldCoordinate.y+")";
+        info += oldxy+";";
+    }
+    if (event.newCoordinate) {              // where the block is now
+        var newxy = "n("+event.newCoordinate.x+","+event.newCoordinate.y+")";
+        info += newxy+";";
+    }
+    if (event.blockId) {                    // some info about the block
+        var blockid = "bl:"+event.blockId;
+        info += blockid + ","
+        var block = workspace.getBlockById(event.blockId);
+        if (block) {
+            info += block.type;
+        }
+    }
+
+    console.log("info length: "+info.length);
+
+    var path = window.location.pathname;
+    var a = path.indexOf('/',1);
+    var b = path.indexOf('/',a+1);
+    var ps = path.substring(a+1, b);  // partnership ID
+    $.post('/okcoder/eventlog/',
+    {
+        csrfmiddlewaretoken: csrftoken,
+        ps: ps,
+        name: event.__proto__.type,
+        info: info
+    }
+    );
+
     if (workspace) {
       workspace.fireChangeListener(event);
     }
@@ -412,7 +471,7 @@ Blockly.Events.Create.prototype.run = function(forward) {
   var a = path.indexOf("/", 1);
   var b = path.indexOf("/", a+1);
   var ps = path.substring(a+1,b);
-  
+
   $.post("/okcoder/eventlog", {
   csrfmiddlewaretoken: csrftoken,
   ps: ps,

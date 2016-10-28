@@ -122,7 +122,7 @@ class EventLog(models.Model):
     objects = EventLogManager()
 
     def __str__(self):
-        return self.partnership.name+" ["+event+"] "+str(self.timestamp)
+        return self.partnership.name+" ["+self.event+"] "+str(self.timestamp)
 
 class EvaluationManager(models.Manager):
     def create_evaluation(self, form):
