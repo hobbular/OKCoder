@@ -161,3 +161,19 @@ class Evaluation(models.Model):
     def __str__(self):
         return self.evaluator.name
 
+class CompletionCodeManager(models.Manager):
+    def create_code(self, n):
+        code = self.create(name = n)
+        return code
+
+class CompletionCode(models.Model):
+    """
+    Contains a unique completion code for grading purposes
+    """
+    name = models.CharField(max_length=200)
+    used = models.BooleanField(default=False)
+
+    objects = CompletionCodeManager()
+
+    def __str__(self):
+        return self.name
