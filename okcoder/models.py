@@ -117,8 +117,6 @@ class EventLog(models.Model):
     partnership = models.ForeignKey(Partnership, on_delete=models.CASCADE)
     timestamp = models.DateTimeField('timestamp')
     event = models.CharField(max_length=100)
-    oldxy = models.CharField(max_length=100, default="")
-    newxy = models.CharField(max_length=100, default="")
     info = models.CharField(max_length=100)
 
     objects = EventLogManager()
@@ -163,19 +161,3 @@ class Evaluation(models.Model):
     def __str__(self):
         return self.evaluator.name
 
-class CompletionCodeManager(models.Manager):
-    def create_code(self, n):
-        code = self.create(name = n)
-        return code
-
-class CompletionCode(models.Model):
-    """
-    Contains a unique completion code for grading purposes
-    """
-    name = models.CharField(max_length=200)
-    used = models.BooleanField(default=False)
-
-    objects = CompletionCodeManager()
-
-    def __str__(self):
-        return self.name
