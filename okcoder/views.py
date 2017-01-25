@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
-from .models import Partner, Partnership, Evaluation, LevelLog, RunLog
+from .models import Partner, Partnership, Evaluation, LevelLog, RunLog, CompletionCode
 import random, string
 
 # Create your views here.
@@ -124,7 +124,10 @@ def evaluate(request, ps):
     return HttpResponseRedirect(reverse('okcoder:eval', args=(ps,)))
 
 def complete(request, ps):
+    n = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(16))
+    code = CompletionCode.objects.create_code(n)
+    code.save()
     ps = get_object_or_404(Partnership, name=ps)
     ps.complete = True
     ps.save()
-    return render(request, 'okcoder/complete.html')
+    return render(request, 'okcoder/complete.html', args=n)
