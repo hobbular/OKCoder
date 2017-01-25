@@ -146,4 +146,4 @@ def complete(request, ps):
     ps = get_object_or_404(Partnership, name=ps)
     ps.complete = True
     ps.save()
-    return render(request, 'okcoder/complete.html', args=(n,))
+    return render(request, 'okcoder/complete.html', {'code': n})
